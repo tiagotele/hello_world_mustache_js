@@ -1,0 +1,77 @@
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.1.2/mustache.js"></script>
+
+	<h1>Mustache</h1>
+	<p>Parágrafo</p>
+	<p class="template">Nome {{nome}}.</p>
+	<p class="template">Outro parâmetro {{outro}}.</p>
+	<p class="template">{{#teste}} Tem {{teste}} {{/teste}}</p>
+	<p class="template">{{^teste}} Não tem {{teste}} {{/teste}}</p>
+
+     <p class="template_list">Nomes:</p>
+	<ul class="template_list">
+		{{#nomes}}
+		<li class="template_list">{{nome}}</li>
+		{{/nomes}}
+
+
+	</ul>
+
+     <p class="template_funcao">{{#bold}}Hi {{name}}.{{/bold}}</p>   
+
+
+
+</body>
+
+</html>
+<script type="text/javascript">
+     $(document).ready(function () {
+
+          var variaveis_teste = {
+          nome: 'conteúdo do nome',
+          outro: 'green'
+          }
+
+          var array_de_nomes = {
+          	nomes:[
+          	{nome:"asdf"},
+          	{nome:"fdsa"},
+          	{nome:"oiuf"}
+          	]
+          };
+
+          var usando_funcao = {
+            "nome": "Nome exibido",
+            "bold": function () {
+              return function (text, render) {
+                return "<b>" + render(text) + "</b>";
+              }
+            }
+          };
+
+          $(".template").each(function(index, value) {
+               var current_html = $(this).html();
+               var translated = Mustache.to_html(current_html, variaveis_teste);
+               $(this).html(translated);
+          });
+
+          $(".template_list").each(function(index, value) {
+               var current_html = $(this).html();
+               var translated = Mustache.to_html(current_html, array_de_nomes);
+               $(this).html(translated);
+          });
+
+          $(".template_funcao").each(function(index, value) {
+               var current_html = $(this).html();
+               var translated = Mustache.to_html(current_html, usando_funcao);
+               $(this).html(translated);
+          });
+
+
+     });
+</script>
